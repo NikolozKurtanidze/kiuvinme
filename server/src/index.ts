@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import config from "config";
 import { createServer } from "http";
 import { Server } from "socket.io";
@@ -23,7 +24,7 @@ const io = new Server(httpServer, {
 
 const service = new UserConnectionService(io);
 
-app.get("/", (_, res) => res.send(`Server is up and running version: ${version}`));
+app.get("/", cors(), (_, res) => res.send(`Server is up and running version: ${version}`));
 
 httpServer.listen(port, () => {
     logger.info(`Server is listening (version: ${version})`);
