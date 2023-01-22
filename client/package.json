@@ -1,5 +1,5 @@
 {
-  "name": "kiuvinme",
+  "name": "client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,14 +10,24 @@
   },
   "dependencies": {
     "@next/font": "13.1.4",
+    "@nextui-org/react": "^1.0.0-beta.12",
+    "@quantumart/mobx-form-validation-kit": "^6.1.0",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.4",
+    "mobx": "^6.7.0",
+    "mobx-react": "^7.6.0",
     "next": "13.1.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "4.9.4"
+    "react-icons": "^4.7.1",
+    "sass": "^1.57.1",
+    "scss": "^0.2.4",
+    "socket.io": "^4.5.4",
+    "socket.io-client": "^4.5.4",
+    "typescript": "4.9.4",
+    "uuid": "^9.0.0"
   }
 }

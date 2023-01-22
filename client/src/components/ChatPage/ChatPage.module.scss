@@ -1,0 +1,39 @@
+.page {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    height: 100%;
+}
+
+.chat {
+    height: 600px;
+    overflow-y: scroll;
+    position: relative;
+    gap: 20px;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+        height: 3px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        width: 10px;
+        height: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: linear-gradient(112deg, #06B7DB -63.59%, #FF4ECD -20.3%, #0072F5 70.46%);
+        border-radius: 24px;
+    }
+}
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
