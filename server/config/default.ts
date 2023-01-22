@@ -1,5 +1,5 @@
 export default {
-    corsOrigin: "https://www.kiuvinme.ge/",
+    corsOrigin: "https://www.kiuvinme.ge",
     port: 4000,
-    host: "localhost",
+    host: "https://www.api.kiuvinme.ge",
 };
