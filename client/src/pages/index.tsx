@@ -15,8 +15,6 @@ function Home() {
 
   const socketValue = useSocket();
 
-  useEffect(() => console.log("effect"), []);
-
   if (!socketValue) return null;
 
   const {  store: globalStore } = socketValue;
