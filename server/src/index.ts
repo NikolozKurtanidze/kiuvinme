@@ -9,7 +9,6 @@ import UserConnectionService from "./services/UserConnectionService";
 
 const port = config.get<number>("port");
 const host = config.get<string>("host");
-const corsOrigin = config.get<string>("corsOrigin");
 
 const app = express();
 
@@ -26,7 +25,7 @@ const service = new UserConnectionService(io);
 
 app.get("/", (_, res) => res.send(`Server is up and running version: ${version}`));
 
-httpServer.listen(port, host, () => {
+httpServer.listen(port, () => {
     logger.info(`Server is listening (version: ${version})`);
     logger.info(`http://${host}:${port}`);
 
