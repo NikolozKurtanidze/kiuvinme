@@ -98,7 +98,7 @@ function Home() {
 }
 
 export async function getServerSideProps() {
-  return;
+  return { props: {} };
 }
 
 export default observer(Home); 
