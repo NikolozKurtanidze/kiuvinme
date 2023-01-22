@@ -42,6 +42,11 @@ const ChatPage = () => {
                     aria-labelledby="username"
                     aria-label="username-input"
                     placeholder="Message"
+                    onKeyDown={(e) => {
+                        if (e.code === "Enter") {
+                          handlePress();
+                        }
+                      }}
                     onChange={(e) => store.setMessageValue(e.target.value)}
                     value={store.messageValue}
                     size="lg"

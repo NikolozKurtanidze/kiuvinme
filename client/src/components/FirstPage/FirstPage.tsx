@@ -17,7 +17,7 @@ const FirstPage = ({ store }: FirstPageProps) => {
   useEffect(() => {
     const username = sessionStorage.getItem("username");
     if (username) setSessionUsername(username);
-  }, [setSessionUsername]);
+  }, []);
 
   if (!socketValue) return null;
 
@@ -39,8 +39,14 @@ const FirstPage = ({ store }: FirstPageProps) => {
             aria-labelledby="username-input"
             aria-label="username-input"
             value={store.usernameValue}
+            onKeyDown={(e) => {
+              if (e.code === "Enter") {
+                handleOnClick();
+              }
+            }}
             onChange={(e) => {
               store.setUsernameValue(e.target.value);
+              setSessionUsername(e.target.value);
               sessionStorage.setItem("username", e.target.value);
             }}
             size="xl"
