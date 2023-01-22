@@ -1,5 +1,5 @@
 export default {
-    corsOrigin: "http://localhost:3000",
+    corsOrigin: "https://prod.d20ynfda090yex.amplifyapp.com",
     port: 4000,
     host: "localhost",
 };
