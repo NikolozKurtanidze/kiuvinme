@@ -1,1 +1,1 @@
-export const SOCKET_URL = "https://kiuvinme-production.up.railway.app";
+export const SOCKET_URL = "https://api.kiuvinme.ge";
