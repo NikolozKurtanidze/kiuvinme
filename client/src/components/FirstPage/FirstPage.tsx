@@ -28,9 +28,9 @@ const FirstPage = ({ store }: FirstPageProps) => {
   const { socket, store: globalStore } = socketValue;
 
   const handleOnClick = () => {
-    globalStore.setUsername(store.form.controls.username.value);
+    globalStore.setUsername(store.usernameValue);
     const socketId = socket.id;
-    socket.emit("seekingForPair", { username: store.form.controls.username.value, socketId });
+    socket.emit("seekingForPair", { username: globalStore.username, socketId });
   }
   
   return (
@@ -38,7 +38,7 @@ const FirstPage = ({ store }: FirstPageProps) => {
           <Input
             aria-labelledby="username-input"
             aria-label="username-input"
-            value={store.form.controls.username.value}
+            value={store.usernameValue}
             onChange={(e) => {
               store.setUsernameValue(e.target.value);
               sessionStorage.setItem("username", e.target.value);
@@ -48,7 +48,7 @@ const FirstPage = ({ store }: FirstPageProps) => {
           <Button
             auto
             onPress={handleOnClick}
-            disabled={store.form.controls.username.invalid}
+            disabled={store.usernameValue === ""}
             size="md"
             icon={<FcNext className={styles["icon"]} />}
             shadow>

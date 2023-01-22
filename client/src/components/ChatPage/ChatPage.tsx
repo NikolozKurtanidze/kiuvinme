@@ -43,13 +43,13 @@ const ChatPage = () => {
                     aria-label="username-input"
                     placeholder="Message"
                     onChange={(e) => store.setMessageValue(e.target.value)}
-                    value={store.form.controls.message.value}
+                    value={store.messageValue}
                     size="lg"
                     />
                 <Button
                     auto
                     color="primary"
-                    disabled={store.form.controls.message.invalid}
+                    disabled={store.messageValue === ""}
                     size="md"
                     onPress={() => handlePress()}>
                         Send
