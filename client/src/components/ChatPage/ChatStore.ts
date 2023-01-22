@@ -49,13 +49,17 @@ class ChatStore {
             this.toggleIsSearching();
         });
 
+        this.socket.on("pairDisconnected", () => {
+            this.resetStore();
+        });
+
         this.socket.on("receiveMessage", ({ message }) => {
             this.pushMessage(message);
         });
     }
 
     resetStore() {
-        this.socket.disconnect();
+        this.socket.emit("disconnectUser", { pairSocketId: this.receiver?.socketId });
         location.reload();
     }
 

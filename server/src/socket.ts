@@ -18,7 +18,7 @@ function socket({ io, service }: { io: Server, service: UserConnectionService })
 
         socket.on("sendMessage", (message: Message) => service.sendMessage(message));
 
-        socket.on("disconnect", () => service.removeUser(socket.id));
+        socket.on("disconnectUser", ({ pairSocketId }: { pairSocketId: string}) => service.removeUser(socket.id, pairSocketId));
     })
 
 }

@@ -46,8 +46,11 @@ class UserConnectionService {
         }
     }
 
-    removeUser(socketId: string) {
+    removeUser(socketId: string, pairSocketId?: string) {
         this.usersQueue = this.usersQueue.filter((user) => user.socketId !== socketId);
+        if (pairSocketId) {
+            this.io.to(pairSocketId).emit("pairDisconnected");
+        }
     }
 }
 
