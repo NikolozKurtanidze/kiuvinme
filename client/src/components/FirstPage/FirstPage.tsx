@@ -36,7 +36,7 @@ const FirstPage = ({ store }: FirstPageProps) => {
   return (
         <div className={styles["username-container"]}>
           <Input
-            aria-labelledby="username"
+            aria-labelledby="username-input"
             aria-label="username-input"
             value={store.form.controls.username.value}
             onChange={(e) => {

@@ -1,6 +1,7 @@
 import { useSocket } from "@/context/useSocket"
 import { Button, Input, Text, Container } from "@nextui-org/react";
 import { observer } from "mobx-react";
+import { v4 } from "uuid";
 import styles from "./ChatPage.module.scss";
 
 const ChatPage = () => {
@@ -23,13 +24,13 @@ const ChatPage = () => {
                 {store.messages.map((message) => {
                     if (message.bySocketId !== store.socket.id) {
                         return (
-                            <Text style={{maxWidth: "50%", wordWrap: "break-word"}} blockquote>
+                            <Text key={v4()} style={{maxWidth: "50%", wordWrap: "break-word"}} blockquote>
                                 {message.value}
                             </Text>
                         );
                     }
                     return (
-                        <Text style={{marginLeft: "50%", maxWidth: "50%", wordWrap: "break-word", backgroundColor: "#0072F5"}}  blockquote>
+                        <Text key={v4()} style={{marginLeft: "50%", maxWidth: "50%", wordWrap: "break-word", backgroundColor: "#0072F5"}}  blockquote>
                             {message.value}
                         </Text>
 
@@ -50,7 +51,7 @@ const ChatPage = () => {
                     color="primary"
                     disabled={store.form.controls.message.invalid}
                     size="md"
-                    onPress={handlePress}>
+                    onPress={() => handlePress()}>
                         Send
                 </Button>
                 <Button

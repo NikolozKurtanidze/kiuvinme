@@ -74,8 +74,8 @@ function Home() {
           <Modal.Body>
             <Text>
               Someone in kiu confessions group requested to make website like vinme.ge but for kiu students,
-              Since I didn't have anything to do I've decided to implement it myself. It might have a lot of bugs since I've done it overnight (6 hours total),
-              So don't be strict and try to have fun. Messages are completely anonymous, you can check the source code here: 
+              Since I didn&apos;t have anything to do I&apos;ve decided to implement it myself. It might have a lot of bugs since I&apos;ve done it overnight (6 hours total),
+              So don&apos;t be strict and try to have fun. Messages are completely anonymous, you can check the source code here:
               <Link href="https://github.com/NikolozKurtanidze/kiuvinme">https://github.com/NikolozKurtanidze/kiuvinme</Link><br />
               (Would appreciate repo stars ;) <br /> Thanks to #5581 confession author {"<3"} 
             </Text>
@@ -95,4 +95,4 @@ function Home() {
   )
 }
 
-export default observer(Home); 
+export default Home; 
