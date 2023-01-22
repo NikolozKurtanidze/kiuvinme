@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import Head from 'next/head';
 import styles from "../styles/Home.module.scss";
 import { Button, Link, Loading, Modal, Text, useModal } from "@nextui-org/react";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import HomeFormStore from '@/components/FirstPage/HomeFormStore';
 import FirstPage from '@/components/FirstPage/FirstPage';
 import ChatPage from '@/components/ChatPage/ChatPage';
@@ -14,6 +14,8 @@ function Home() {
   const { setVisible, bindings } = useModal();
 
   const socketValue = useSocket();
+
+  useEffect(() => console.log("effect"), []);
 
   if (!socketValue) return null;
 
@@ -95,4 +97,8 @@ function Home() {
   )
 }
 
-export default Home; 
+export async function getServerSideProps() {
+  return;
+}
+
+export default observer(Home); 

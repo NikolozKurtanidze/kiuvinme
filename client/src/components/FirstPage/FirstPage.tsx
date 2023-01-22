@@ -40,8 +40,8 @@ const FirstPage = ({ store }: FirstPageProps) => {
             aria-label="username-input"
             value={store.form.controls.username.value}
             onChange={(e) => {
-              sessionStorage.setItem("username", e.target.value);
               store.setUsernameValue(e.target.value);
+              sessionStorage.setItem("username", e.target.value);
             }}
             size="xl"
             placeholder="Username" />
