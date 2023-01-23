@@ -7,15 +7,13 @@ import HomeFormStore from '@/components/FirstPage/HomeFormStore';
 import FirstPage from '@/components/FirstPage/FirstPage';
 import ChatPage from '@/components/ChatPage/ChatPage';
 import { useSocket } from '@/context/useSocket';
-import { AiOutlineInfoCircle } from "react-icons/ai";
+import { BsQuestion } from "react-icons/bs";
 
 function Home() {
   const [store] = useState(() => new HomeFormStore());
   const { setVisible, bindings } = useModal();
 
   const socketValue = useSocket();
-
-  useEffect(() => console.log("effect"), []);
 
   if (!socketValue) return null;
 
@@ -27,7 +25,7 @@ function Home() {
         <title>kiuvinme</title>
         <meta name="description" content="Meet random people from KIU" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" />
       </Head>
       <main className={styles["main"]}>
         <Text
@@ -57,10 +55,10 @@ function Home() {
           }
         </div>
         <Button
-          style={{position: "absolute", left: 0, top: 0, margin: "15px"}}
+          style={{position: "absolute", right: 0, top: 0, margin: "15px"}}
           color="secondary"
           auto
-          icon={<AiOutlineInfoCircle />}
+          icon={<BsQuestion className={styles["question-icon"]} />}
           onPress={() => setVisible(true)}/>
         <Modal
           aria-labelledby="modal-title"
@@ -98,7 +96,7 @@ function Home() {
 }
 
 export async function getServerSideProps() {
-  return;
+  return { props: {} };
 }
 
 export default observer(Home); 

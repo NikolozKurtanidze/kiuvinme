@@ -1,11 +1,6 @@
-import { ControlsCollection, FormControl, FormGroup, notEmptyOrSpacesValidator } from "@quantumart/mobx-form-validation-kit";
 import { action, makeObservable, observable } from "mobx";
 import { Socket } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
-
-interface HomeForm extends ControlsCollection {
-    message: FormControl<string>;
-}
 
 export interface Message {
     value: string;
@@ -19,7 +14,7 @@ export interface User {
 }
 
 class ChatStore {
-    public form: FormGroup<HomeForm>;
+    public messageValue: string = "";
     public messages: Message[] = [];
     public username: string | null = null;
     public receiver: User | null = null;
@@ -27,6 +22,7 @@ class ChatStore {
 
     constructor(public readonly socket: Socket<DefaultEventsMap, DefaultEventsMap>) {
         makeObservable(this, {
+            messageValue: observable,
             messages: observable,
             receiver: observable,
             isSearching: observable,
@@ -38,11 +34,6 @@ class ChatStore {
             setMessageValue: action,
             pushMessage: action,
         })
-        this.form = new FormGroup<HomeForm>({
-            message: new FormControl<string>("", {
-                validators: [notEmptyOrSpacesValidator()],
-            }),
-        });
 
         this.socket.on("foundPair", ({ user }) => {
             this.setReceiver(user);
@@ -70,13 +61,13 @@ class ChatStore {
     sendMessage() {
         if (this.receiver) {
             const message: Message = {
-                value: this.form.controls.message.value,
+                value: this.messageValue,
                 bySocketId: this.socket.id,
                 toSocketId: this.receiver.socketId,
             };
             this.pushMessage(message);
             this.socket.emit("sendMessage", message);
-            this.form.controls.message.value = "";
+            this.messageValue = "";
         } else {
             location.reload();
         }
@@ -97,7 +88,7 @@ class ChatStore {
     }
 
     setMessageValue(newValue: string) {
-        this.form.controls.message.value = newValue;
+        this.messageValue = newValue;
     }
 }
 

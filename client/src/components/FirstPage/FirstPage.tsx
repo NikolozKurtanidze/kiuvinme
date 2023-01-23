@@ -17,7 +17,7 @@ const FirstPage = ({ store }: FirstPageProps) => {
   useEffect(() => {
     const username = sessionStorage.getItem("username");
     if (username) setSessionUsername(username);
-  }, [setSessionUsername]);
+  }, []);
 
   if (!socketValue) return null;
 
@@ -28,9 +28,9 @@ const FirstPage = ({ store }: FirstPageProps) => {
   const { socket, store: globalStore } = socketValue;
 
   const handleOnClick = () => {
-    globalStore.setUsername(store.form.controls.username.value);
+    globalStore.setUsername(store.usernameValue);
     const socketId = socket.id;
-    socket.emit("seekingForPair", { username: store.form.controls.username.value, socketId });
+    socket.emit("seekingForPair", { username: globalStore.username, socketId });
   }
   
   return (
@@ -38,9 +38,15 @@ const FirstPage = ({ store }: FirstPageProps) => {
           <Input
             aria-labelledby="username-input"
             aria-label="username-input"
-            value={store.form.controls.username.value}
+            value={store.usernameValue}
+            onKeyDown={(e) => {
+              if (e.code === "Enter") {
+                handleOnClick();
+              }
+            }}
             onChange={(e) => {
               store.setUsernameValue(e.target.value);
+              setSessionUsername(e.target.value);
               sessionStorage.setItem("username", e.target.value);
             }}
             size="xl"
@@ -48,7 +54,7 @@ const FirstPage = ({ store }: FirstPageProps) => {
           <Button
             auto
             onPress={handleOnClick}
-            disabled={store.form.controls.username.invalid}
+            disabled={store.usernameValue === ""}
             size="md"
             icon={<FcNext className={styles["icon"]} />}
             shadow>
