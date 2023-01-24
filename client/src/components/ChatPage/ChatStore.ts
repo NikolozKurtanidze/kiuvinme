@@ -38,6 +38,10 @@ class ChatStore {
             pushMessage: action,
         });
 
+        this.socket.on("youAreDisconnected", () => this.resetStore());
+
+        this.socket.on("areYouAlive", (callback: () => void) => callback());
+
         this.socket.emit("getLiveCounter", ({ liveCounter }: { liveCounter: number }) => {
             this.setUsersCounter(liveCounter);
         });
