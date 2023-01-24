@@ -4,6 +4,7 @@ import logger from "./utils/logger";
 
 const EVENTS = {
     connection: "connection",
+    disconnect: "disconnect",
 };
 
 function socket({ io, service }: { io: Server, service: UserConnectionService }) {
@@ -18,9 +19,8 @@ function socket({ io, service }: { io: Server, service: UserConnectionService })
 
         socket.on("sendMessage", (message: Message) => service.sendMessage(message));
 
-        socket.on("disconnectUser", ({ pairSocketId }: { pairSocketId: string}) => service.removeUser(socket.id, pairSocketId));
-    })
-
+        socket.on("disconnect", () => service.removeUser(socket.id));
+    });
 }
 
 export default socket;
