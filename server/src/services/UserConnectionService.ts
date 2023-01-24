@@ -5,6 +5,7 @@ import socket from "../socket";
 export interface User {
     username: string;
     socketId: string;
+    pairId?: string;
 }
 
 export interface UserPair {
@@ -19,38 +20,58 @@ export interface Message {
 }
 
 class UserConnectionService {
-    private usersQueue: User[] = [];
+    private users: User[] = [];
+    private waitingUsers: User[] = [];
 
     constructor(private readonly io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) {}
+
+    public shareLiveCounter() {
+        this.io.emit("liveCounter", { liveCounter: this.users.length });
+    }
+
+    get liveCounter(): number {
+        return this.users.length;
+    }
     
     public addUser(user: User) {
-        this.usersQueue.push(user);
-        if (this.usersQueue.length === 1) {
-            return;
-        }
-        this.pairUser();
+        this.users.push(user);
+        this.pairUser(user);
+        this.shareLiveCounter();
     }
 
     public sendMessage(message: Message) {
-        this.io.to(message.toSocketId).emit("receiveMessage", { message });
+        this.io
+            .to(message.toSocketId)
+            .timeout(5000)
+            .emit("receiveMessage", { message },
+            (err: any) => {
+                if (err) {
+                    this.removeUser(message.bySocketId);
+                    this.removeUser(message.toSocketId);
+                }
+            });
     }
 
-    private pairUser() {
-        if (this.usersQueue.length > 1) {
-            const user1 = this.usersQueue.pop();
-            const user2 = this.usersQueue.shift();
-            if (user1 && user2) {
-                this.io.to(user1.socketId).emit("foundPair", { user: user2 });
-                this.io.to(user2.socketId).emit("foundPair", { user: user1 });
-            }
+    private pairUser(user: User) {
+        const pair = this.waitingUsers.shift();
+        if (pair) {
+            user.pairId = pair.socketId;
+            pair.pairId = user.socketId;
+            this.io.to(user.socketId).emit("foundPair", { user: pair });
+            this.io.to(pair.socketId).emit("foundPair", { user: user });
+        } else {
+            this.waitingUsers.push(user);
         }
     }
 
-    removeUser(socketId: string, pairSocketId?: string) {
-        this.usersQueue = this.usersQueue.filter((user) => user.socketId !== socketId);
-        if (pairSocketId) {
-            this.io.to(pairSocketId).emit("pairDisconnected");
+    removeUser(socketId: string) {
+        const user = this.users.find((user) => user.socketId === socketId);
+        this.users = this.users.filter((user) => user.socketId !== socketId);
+        this.waitingUsers = this.waitingUsers.filter((user) => user.socketId !== socketId);
+        if (user && user.pairId) {
+            this.io.to(user.pairId).emit("pairDisconnected");
         }
+        this.shareLiveCounter();
     }
 }
 

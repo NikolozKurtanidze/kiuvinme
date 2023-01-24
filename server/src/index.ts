@@ -26,7 +26,7 @@ const service = new UserConnectionService(io);
 
 app.get("/", cors(), (_, res) => res.send(`Server is up and running version: ${version}`));
 
-httpServer.listen(port, () => {
+httpServer.listen(port || 4000, () => {
     logger.info(`Server is listening (version: ${version})`);
     logger.info(`http://${host}:${port}`);
 
