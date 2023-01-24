@@ -23,7 +23,22 @@ class UserConnectionService {
     private users: User[] = [];
     private waitingUsers: User[] = [];
 
-    constructor(private readonly io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) {}
+    constructor(private readonly io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) {
+        setInterval(() => {
+            this.users.forEach((user) => this.checkIfUserAlive(user));
+        }, 5000);
+    }
+
+    private checkIfUserAlive(user: User) {
+        this.io
+            .to(user.socketId)
+            .timeout(5000)
+            .emit("areYouAlive", (err: any) => {
+                if (err) {
+                    this.removeUser(user.socketId);
+                }
+            });
+    }
 
     public shareLiveCounter() {
         this.io.emit("liveCounter", { liveCounter: this.users.length });
@@ -68,8 +83,11 @@ class UserConnectionService {
         const user = this.users.find((user) => user.socketId === socketId);
         this.users = this.users.filter((user) => user.socketId !== socketId);
         this.waitingUsers = this.waitingUsers.filter((user) => user.socketId !== socketId);
-        if (user && user.pairId) {
-            this.io.to(user.pairId).emit("pairDisconnected");
+        if (user) {
+            this.io.to(user.socketId).emit("youAreDisconnected");
+            if (user.pairId) {
+                this.io.to(user.pairId).emit("pairDisconnected");
+            }
         }
         this.shareLiveCounter();
     }

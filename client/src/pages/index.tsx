@@ -54,7 +54,23 @@ function Home() {
           )
           }
         </div>
-        <Text color="secondary" h4 className={styles["users-counter"]}>{globalStore.usersCounter} Active users</Text>
+        <div className={styles["users-counter"]}>
+            {globalStore.usersCounter !== null ? 
+              (<Text
+                  color="secondary"
+                  h4
+                  className={styles["users-counter__text"]}>
+                    {globalStore.usersCounter}
+                </Text>) 
+              : 
+              <Loading color="secondary" size='sm' />} 
+            <Text
+            color="secondary"
+            h4
+            className={styles["users-counter__text"]}>
+            Active users
+            </Text>
+        </div>
         <Button
           style={{position: "absolute", right: 0, top: 0, margin: "15px"}}
           color="secondary"
