@@ -54,6 +54,7 @@ function Home() {
           )
           }
         </div>
+        <Text color="secondary" h4 className={styles["users-counter"]}>{globalStore.usersCounter} Active users</Text>
         <Button
           style={{position: "absolute", right: 0, top: 0, margin: "15px"}}
           color="secondary"

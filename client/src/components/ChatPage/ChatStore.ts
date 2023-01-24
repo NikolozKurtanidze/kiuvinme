@@ -19,21 +19,30 @@ class ChatStore {
     public username: string | null = null;
     public receiver: User | null = null;
     public isSearching: boolean = false;
+    public usersCounter: number | null = null;
 
     constructor(public readonly socket: Socket<DefaultEventsMap, DefaultEventsMap>) {
         makeObservable(this, {
             messageValue: observable,
+            usersCounter: observable,
             messages: observable,
             receiver: observable,
             isSearching: observable,
             username: observable,
             resetStore: action,
             setReceiver: action,
+            setUsersCounter: action,
             toggleIsSearching: action,
             setUsername: action,
             setMessageValue: action,
             pushMessage: action,
-        })
+        });
+
+        this.socket.emit("getLiveCounter", ({ liveCounter }: { liveCounter: number }) => {
+            this.setUsersCounter(liveCounter);
+        });
+
+        this.socket.on("liveCounter", ({ liveCounter }) => this.setUsersCounter(liveCounter));
 
         this.socket.on("foundPair", ({ user }) => {
             this.setReceiver(user);
@@ -44,9 +53,14 @@ class ChatStore {
             this.resetStore();
         });
 
-        this.socket.on("receiveMessage", ({ message }) => {
+        this.socket.on("receiveMessage", ({ message }, callback) => {
             this.pushMessage(message);
+            callback();
         });
+    }
+
+    setUsersCounter(newCounter: number) {
+        this.usersCounter = newCounter;
     }
 
     resetStore() {
