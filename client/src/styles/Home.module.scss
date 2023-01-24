@@ -39,4 +39,14 @@
 
 .users-counter {
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+
+    &__text {
+        margin-bottom: -5px;
+    }
 }
+
