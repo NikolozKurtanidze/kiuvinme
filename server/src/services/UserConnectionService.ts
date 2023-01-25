@@ -27,7 +27,7 @@ class UserConnectionService {
     constructor(private readonly io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) {
         setInterval(() => {
             this.users.forEach((user) => this.checkIfUserAlive(user));
-            logger.info(`Users queue, ${this.users}`);
+            logger.info(`Users queue: ${this.users.map((user) => user.username)}`);
         }, 5000);
     }
 
