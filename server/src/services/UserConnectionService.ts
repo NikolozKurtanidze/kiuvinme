@@ -7,6 +7,7 @@ export interface User {
     username: string;
     socketId: string;
     pairId?: string;
+    addedOn: string;
 }
 
 export interface UserPair {
@@ -27,8 +28,15 @@ class UserConnectionService {
     constructor(private readonly io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) {
         setInterval(() => {
             this.users.forEach((user) => this.checkIfUserAlive(user));
-            logger.info(`Users queue: ${this.users.map((user) => user.username)}`);
         }, 5000);
+    }
+
+    public clearAllUsers() {
+        this.users.forEach((user) => this.removeUser(user.socketId));
+    }
+
+    public get stringUsers(): string {
+        return JSON.stringify(this.users);
     }
 
     private checkIfUserAlive(user: User) {
