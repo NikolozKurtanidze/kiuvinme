@@ -1,6 +1,7 @@
 import { Server, Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import socket from "../socket";
+import logger from "../utils/logger";
 
 export interface User {
     username: string;
@@ -26,6 +27,7 @@ class UserConnectionService {
     constructor(private readonly io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) {
         setInterval(() => {
             this.users.forEach((user) => this.checkIfUserAlive(user));
+            logger.info(`Users queue, ${this.users}`);
         }, 5000);
     }
 
