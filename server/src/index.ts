@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import config from "config";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import logger from "./utils/logger";
@@ -8,12 +7,19 @@ import { version } from "../package.json";
 import socket from "./socket";
 import Discord from "discord.js";
 import UserConnectionService from "./services/UserConnectionService";
+import dotenv from "dotenv";
 
-const port = config.get<number>("port");
-const host = config.get<string>("host");
-const botToken = config.get<string>("botToken");
-const discordServerId = config.get<string>("discordServerId");
-const counterChannelId = config.get<string>("counterChannelId");
+dotenv.config();
+
+const port = process.env.PORT;
+const host = process.env.HOST;
+const botToken = process.env.BOT_TOKEN;
+const discordServerId = process.env.DISCORD_SERVER_ID;
+const counterChannelId = process.env.COUNTER_CHANNEL_ID;
+
+if (!port || !host || !botToken || !discordServerId || !counterChannelId) {
+    throw new Error("Something is undefined...");
+}
 
 const app = express();
 

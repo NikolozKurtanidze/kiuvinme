@@ -1,12 +1,15 @@
-import { SOCKET_URL } from "@/config/default";
 import { io, Socket } from "socket.io-client";
 import { createContext, useContext, useState } from "react";
 import ChatStore from "@/components/ChatPage/ChatStore";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 
-const socket = io(SOCKET_URL);
+const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL;
 
-socket.emit("test");
+if (!socketUrl) {
+    throw new Error("Socket URL should be defined in env variables");
+}
+
+const socket = io(socketUrl);
 
 export interface SocketContextValue {
     socket: Socket<DefaultEventsMap, DefaultEventsMap>;
