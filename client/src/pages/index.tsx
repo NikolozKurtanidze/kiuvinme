@@ -9,7 +9,7 @@ import {
   Text,
   useModal,
 } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import HomeFormStore from "@/components/FirstPage/HomeFormStore";
 import FirstPage from "@/components/FirstPage/FirstPage";
 import ChatPage from "@/components/ChatPage/ChatPage";
@@ -28,12 +28,6 @@ function Home() {
 
   return (
     <>
-      <Head>
-        <title>kiuvinme</title>
-        <meta name="description" content="Meet random people from KIU" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.svg" />
-      </Head>
       <main className={styles["main"]}>
         <Text
           h1
