@@ -28,6 +28,9 @@ function Home() {
 
   return (
     <>
+      <Head>
+        <title>kiuvinme</title>
+      </Head>
       <main className={styles["main"]}>
         <Text
           h1
