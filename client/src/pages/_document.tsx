@@ -22,7 +22,6 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           {CssBaseline.flush()}
-          <title>kiuvinme</title>
           <meta
             name="description"
             content="Kiuvinme - Meet random people from KIU"
