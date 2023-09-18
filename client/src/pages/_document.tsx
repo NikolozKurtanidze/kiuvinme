@@ -32,7 +32,7 @@ class MyDocument extends Document {
           <meta property="og:title" content="Kiuvinme" />
           <meta
             property="og:description"
-            content="Description of my cool website."
+            content="Meet random people from KIU"
           />
           <meta
             property="og:image"
