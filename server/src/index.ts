@@ -24,7 +24,7 @@ if (
   !botToken ||
   !discordServerId ||
   !counterChannelId ||
-  corsOrigin
+  !corsOrigin
 ) {
   throw new Error("Some env variable is undefined...");
 }
