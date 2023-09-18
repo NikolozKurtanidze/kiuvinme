@@ -50,7 +50,7 @@ const ChatPage = () => {
         <Button
           auto
           color="primary"
-          disabled={store.messageValue === ""}
+          disabled={store.messageValue === "" || !/\S/.test(store.messageValue)}
           size="md"
           onPress={() => handlePress()}
         >

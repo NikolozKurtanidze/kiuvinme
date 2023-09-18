@@ -1,20 +1,20 @@
 import { action, makeObservable, observable } from "mobx";
 
 class HomeFormStore {
-    usernameValue: string;
+  usernameValue: string;
 
-    constructor(username?: string) {
-        this.usernameValue = username ?? "";
+  constructor(username?: string) {
+    this.usernameValue = username ?? "";
 
-        makeObservable(this, {
-            usernameValue: observable,
-            setUsernameValue: action,
-        })
-    }
+    makeObservable(this, {
+      usernameValue: observable,
+      setUsernameValue: action,
+    });
+  }
 
-    setUsernameValue(newValue: string) {
-        this.usernameValue = newValue;
-    }
+  setUsernameValue(newValue: string) {
+    this.usernameValue = newValue;
+  }
 }
 
 export default HomeFormStore;
