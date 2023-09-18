@@ -13,7 +13,7 @@ interface FirstPageProps {
 const FirstPage = ({ store }: FirstPageProps) => {
   const socketValue = useSocket();
   const [sessionUsername, setSessionUsername] = useState<string>();
-  
+
   useEffect(() => {
     const username = sessionStorage.getItem("username");
     if (username) setSessionUsername(username);
@@ -31,37 +31,39 @@ const FirstPage = ({ store }: FirstPageProps) => {
     globalStore.setUsername(store.usernameValue);
     const socketId = socket.id;
     socket.emit("seekingForPair", { username: globalStore.username, socketId });
-  }
-  
+  };
+
   return (
-        <div className={styles["username-container"]}>
-          <Input
-            aria-labelledby="username-input"
-            aria-label="username-input"
-            value={store.usernameValue}
-            onKeyDown={(e) => {
-              if (e.code === "Enter") {
-                handleOnClick();
-              }
-            }}
-            onChange={(e) => {
-              store.setUsernameValue(e.target.value);
-              setSessionUsername(e.target.value);
-              sessionStorage.setItem("username", e.target.value);
-            }}
-            size="xl"
-            placeholder="Username" />
-          <Button
-            auto
-            onPress={handleOnClick}
-            disabled={store.usernameValue === ""}
-            size="md"
-            icon={<FcNext className={styles["icon"]} />}
-            shadow>
-              Next
-          </Button>
-        </div>
-    );
+    <div className={styles["username-container"]}>
+      <Input
+        aria-labelledby="username-input"
+        aria-label="username-input"
+        value={store.usernameValue}
+        onKeyDown={(e) => {
+          if (e.code === "Enter") {
+            handleOnClick();
+          }
+        }}
+        onChange={(e) => {
+          store.setUsernameValue(e.target.value);
+          setSessionUsername(e.target.value);
+          sessionStorage.setItem("username", e.target.value);
+        }}
+        size="xl"
+        placeholder="Username"
+      />
+      <Button
+        auto
+        onPress={handleOnClick}
+        disabled={store.usernameValue === ""}
+        size="md"
+        icon={<FcNext className={styles["icon"]} />}
+        shadow
+      >
+        Next
+      </Button>
+    </div>
+  );
 };
 
 export default observer(FirstPage);
