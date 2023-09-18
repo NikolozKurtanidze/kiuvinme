@@ -23,9 +23,25 @@ class MyDocument extends Document {
         <Head>
           {CssBaseline.flush()}
           <title>kiuvinme</title>
-          <meta name="description" content="kiuvinme - Meet random people from KIU" />
+          <meta
+            name="description"
+            content="Kiuvinme - Meet random people from KIU"
+          />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.svg" />
+
+          <meta property="og:title" content="Kiuvinme" />
+          <meta
+            property="og:description"
+            content="Description of my cool website."
+          />
+          <meta
+            property="og:image"
+            content="/favicon.svg"
+          />
+          <meta property="og:url" content="https://kiuvinme.ge" />
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content="Kiuvinme" />
         </Head>
         <script
           async
