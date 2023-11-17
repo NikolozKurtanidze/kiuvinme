@@ -1,10 +1,8 @@
 import { Server } from "socket.io";
-import Discord from "discord.js";
 import UserConnectionService, {
   Message,
 } from "./services/UserConnectionService";
 import logger from "./utils/logger";
-import config from "config";
 
 const EVENTS = {
   connection: "connection",
