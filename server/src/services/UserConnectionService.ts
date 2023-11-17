@@ -78,7 +78,6 @@ class UserConnectionService {
       .emit("receiveMessage", { message }, (err: any) => {
         if (err) {
           this.removeUser(message.bySocketId);
-          this.removeUser(message.toSocketId);
         }
       });
   }
@@ -97,6 +96,7 @@ class UserConnectionService {
 
   removeUser(socketId: string) {
     const user = this.users.find((user) => user.socketId === socketId);
+    const waitingUser = this.waitingUsers.find((user) => user.socketId === socketId);
     this.users = this.users.filter((user) => user.socketId !== socketId);
     this.waitingUsers = this.waitingUsers.filter(
       (user) => user.socketId !== socketId
@@ -107,6 +107,11 @@ class UserConnectionService {
         this.io.to(user.pairId).emit("pairDisconnected");
       }
     }
+
+    if (waitingUser) {
+      this.io.to(waitingUser.socketId).emit("youAreDisconnected");
+    }
+
     this.shareLiveCounter();
   }
 }
