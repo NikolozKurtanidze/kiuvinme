@@ -46,7 +46,7 @@ class ChatStore {
 
     this.socket.emit(
       "getLiveCounter",
-      ({ liveCounter }: { liveCounter: number }) => {
+      (liveCounter: number) => {
         this.setUsersCounter(liveCounter);
       }
     );

@@ -35,12 +35,15 @@ function socket({
       service.sendMessage(message)
     );
 
-    socket.on("disconnect", () => service.removeUser(socket.id));
+    socket.on("disconnect", () => {
+      logger.info(`User removed: ${socket.id}`);
+      service.removeUser(socket.id);
+    });
 
     socket.on(
       "getLiveCounter",
-      (callback: ({ liveCounter }: { liveCounter: number }) => void) => {
-        callback({ liveCounter: service.liveCounter });
+      (callback: (liveCounter: number) => void) => {
+        callback(service.liveCounter);
       }
     );
   });
